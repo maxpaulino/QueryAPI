@@ -16,6 +16,9 @@ This is a Flask application that generates SQL queries based on natural language
    - `DB_NAME`: The name of the database.
    - `DB_USERNAME`: The username to connect to the database.
    - `DB_PASSWORD`: The password to connect to the database.
+   - `USERNAME`: The username to connect to the API.
+   - `PASSWORD`: The password to connect to the API.
+   - `JWT_SECRET_PASSWORD`: The secret password to connect to the API?.
 
 4. Run the Flask application by executing the following command:
 
