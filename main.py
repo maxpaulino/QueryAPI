@@ -1,4 +1,5 @@
 # Imports
+
 from flask import Flask, jsonify, request
 import pyodbc
 import openai
@@ -42,6 +43,7 @@ jwt = JWTManager(app)
 # the cursor object. For each table, it retrieves the names of all columns using 
 # the "columns()" method and appends them to the "schema" string. Finally, it 
 # returns the "schema" string containing the schema for all tables in the database.
+
 def get_schema():
     schema = ""
     cursor = conn.cursor()
@@ -58,6 +60,7 @@ def get_schema():
 # between the system and user, where the system provides a schema and prompts the 
 # user to provide an SQL query. The user-supplied query is then used to generate 
 # SQL code using the GPT-3 model. The generated SQL code is returned by the function
+
 def generate_sql_code(query):
     completion = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
@@ -79,6 +82,7 @@ def generate_sql_code(query):
 # request with username and password data in JSON format. If the credentials
 # are invalid, a 401 error is returned, otherwise, an access token is created
 # and returned with a 200 success status code.
+
 @app.route('/login', methods=['POST'])
 def login():
 
@@ -95,6 +99,7 @@ def login():
 # This code defines a Flask route for an endpoint that is protected with JWT authentication. 
 # The endpoint returns a JSON response containing a message and the current user's 
 # identity.
+
 @app.route('/protected', methods=['GET'])
 @jwt_required()  
 def protected():
@@ -109,6 +114,7 @@ def protected():
 # the database connected by pyodbc, and returns the fetched result as a JSON
 # object. If pyodbc throws an error, it returns a 500 error with the error message. 
 # Otherwise, it returns a 200 status code with the result or error message.
+
 @app.route('/getquery/<string:nl_query>', methods=['GET'])
 def get_query(nl_query):
     if not nl_query:
@@ -128,6 +134,7 @@ def get_query(nl_query):
         return {"error": str(e)}, 500
 
 # Main Function
+
 if __name__ == '__main__':
     app.run(debug=True)
 
