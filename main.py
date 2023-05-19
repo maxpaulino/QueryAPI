@@ -1,16 +1,20 @@
 # Imports
-from flask import Flask, request
+from flask import Flask, jsonify, request
 import pyodbc
 import openai
 from dotenv import load_dotenv
 import os
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
+import datetime
 
 # This code initializes a Flask application and loads environment variables
 # using load_dotenv(). It also sets the OpenAI API key from the environment variable
 # named OPENAI_API_KEY. Additionally, it establishes a connection to a SQL Server
 # database using pyodbc module with the server name, database name, username, and 
 # password provided as environment variables.
+
 app = Flask(__name__)
+
 load_dotenv()
 
 openai.api_key = os.getenv('OPENAI_API_KEY')
@@ -22,6 +26,14 @@ conn = pyodbc.connect(
     f"UID={os.getenv('DB_USERNAME')};"
     f"PWD={os.getenv('DB_PASSWORD')};"
 )
+
+def_password = os.getenv('PASSWORD')
+def_username = os.getenv('USERNAME')
+
+app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(hours=1)  
+
+jwt = JWTManager(app)
 
 # This code defines a function that connects to a database and retrieves the
 # schema of all its tables. It first creates an empty string called "schema" 
@@ -62,6 +74,34 @@ def generate_sql_code(query):
     )
     sql_code = completion.choices[0].message.content
     return sql_code
+
+# This is a Flask route for user login authentication. The code receives a POST
+# request with username and password data in JSON format. If the credentials
+# are invalid, a 401 error is returned, otherwise, an access token is created
+# and returned with a 200 success status code.
+@app.route('/login', methods=['POST'])
+def login():
+
+    username = request.json.get('username')
+    password = request.json.get('password')
+
+    if username != def_username or password != def_password:
+        return jsonify({'message': 'Invalid credentials'}), 401
+
+    access_token = create_access_token(identity=username)
+
+    return jsonify({'access_token': access_token}), 200
+
+# This code defines a Flask route for an endpoint that is protected with JWT authentication. 
+# The endpoint returns a JSON response containing a message and the current user's 
+# identity.
+@app.route('/protected', methods=['GET'])
+@jwt_required()  
+def protected():
+
+    current_user = get_jwt_identity()
+
+    return jsonify({'message': 'Protected endpoint', 'user': current_user}), 200
 
 # This code defines a route '/getquery' that accepts a natural language query
 # string as a parameter. If the query is empty, it returns an error. Otherwise, 
