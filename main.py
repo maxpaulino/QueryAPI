@@ -41,7 +41,6 @@ def get_schema():
         schema += '\n'
     return schema
 
-
 # This function generates SQL code based on a user-specified query, using Open 
 # AI's GPT-3 natural language processing model. It starts by opening a conversation 
 # between the system and user, where the system provides a schema and prompts the 
@@ -63,8 +62,6 @@ def generate_sql_code(query):
     )
     sql_code = completion.choices[0].message.content
     return sql_code
-
-
 
 # This code defines a route '/getquery' that accepts a natural language query
 # string as a parameter. If the query is empty, it returns an error. Otherwise, 
