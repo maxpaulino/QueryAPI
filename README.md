@@ -1,4 +1,4 @@
-# QueryAI
+# QueryAPI
 
 This is a Flask application that generates SQL queries based on natural language queries using OpenAI's GPT-3.5 Turbo model. The generated SQL queries are executed on a SQL Server database using pyodbc.
 
