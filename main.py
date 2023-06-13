@@ -69,7 +69,7 @@ def generate_sql_code(query):
              "content": get_schema() +
                         "\n\n" +
                         "Let's think step by step. " +
-                        "Use this schema to create an SQL Query. " +
+                        "Use the schema above to create an SQL Query. " +
                         "You are only allowed to output the SQL Query."},
             {"role": "user", "content": query}
         ],
