@@ -41,6 +41,7 @@ def get_query(nl_query):
     try:
         with conn.cursor() as cursor:
             sql_query = generate_sql_code(nl_query)
+            app.logger.info(sql_query)
             cursor.execute(sql_query)
             result = cursor.fetchall()
             return {"data": result}
