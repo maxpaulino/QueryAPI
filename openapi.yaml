@@ -1,0 +1,49 @@
+info:
+  description: An API for generating and managing multiple-choice and true/false questions
+  title: Testify API
+  version: 1.0.3
+openapi: 3.0.3
+paths:
+  /getquery/{nl_query}:
+    get:
+      operationId: get_query
+      parameters:
+      - description: Natural language query
+        in: path
+        name: nl_query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      type: object
+                    type: array
+                type: object
+          description: Successful operation
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                type: object
+          description: Bad request (e.g., empty query provided)
+        '500':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                type: object
+          description: Server error
+      summary: Get SQL query result based on a natural language input
+servers:
+- url: http://localhost:5000
