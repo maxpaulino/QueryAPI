@@ -5,8 +5,12 @@ import openai
 import pyodbc 
 from flask import Flask
 from dotenv import load_dotenv
+import logging
 
 load_dotenv()
+
+logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.DEBUG)
+
 
 # Settings and configurations
 
