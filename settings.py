@@ -4,6 +4,9 @@ import os
 import openai
 import pyodbc 
 from flask import Flask
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Settings and configurations
 
@@ -19,7 +22,7 @@ conn = pyodbc.connect(
     f"PWD={os.getenv('SQL_PASSWORD')};"
 )
 
-openai.api_key = os.environ.get('OPENAI_API_KEY')
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
 
 # Optimized
