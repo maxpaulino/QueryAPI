@@ -17,7 +17,6 @@ conn = pyodbc.connect(
     f"Database={os.getenv('SQL_DATABASE')};"
     f"UID={os.getenv('SQL_USERNAME')};"
     f"PWD={os.getenv('SQL_PASSWORD')};"
-    f"PORT={os.getenv('SQL_PORT')};"
 )
 
 openai.api_key = os.environ.get('OPENAI_API_KEY')
