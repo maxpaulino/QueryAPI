@@ -13,11 +13,11 @@ app = Flask(__name__)
 
 conn = pyodbc.connect(
     "Driver={SQL Server};"
-    f"Server={os.getenv('DB_SERVER')};"
-    f"Database={os.getenv('DB_NAME')};"
-    f"UID={os.getenv('DB_USERNAME')};"
-    f"PWD={os.getenv('DB_PASSWORD')};"
-    f"PORT={os.getenv('DB_PORT')};"
+    f"Server={os.getenv('SQL_SERVER')};"
+    f"Database={os.getenv('SQL_DATABASE')};"
+    f"UID={os.getenv('SQL_USERNAME')};"
+    f"PWD={os.getenv('SQL_PASSWORD')};"
+    f"PORT={os.getenv('SQL_PORT')};"
 )
 
 openai.api_key = os.environ.get('OPENAI_API_KEY')
