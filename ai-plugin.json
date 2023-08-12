@@ -1,9 +1,9 @@
 {
     "schema_version": "v1",
-    "name_for_human": "Testify",
-    "name_for_model": "TestifyAPI",
-    "description_for_human": "Plugin for generating and revising exam questions",
-    "description_for_model": "Use this tool to interact with exam questions inside a MongoDB database",
+    "name_for_human": "AlianzaDB",
+    "name_for_model": "QueryAPI",
+    "description_for_human": "Plugin for querying a local SQL database",
+    "description_for_model": "Use this tool to query the SQL database",
     "auth": {
       "type": "none"
     },
@@ -16,7 +16,6 @@
     "contact_email": "max.paulino@alianzacapitales.com",
     "legal_info_url": "http://www.example.com/legal",
     "logo_url": "http://localhost:5000/logo.png"
-  
   
   }
   
