@@ -1,4 +1,5 @@
-from settings import openai, conn
+from settings import openai, conn, app
+
 
 # This code defines a function that connects to a database and retrieves the
 # schema of all its tables. It first creates an empty string called "schema" 
@@ -17,6 +18,7 @@ def get_schema():
         for row in cursor.columns(table=table.table_name):
             schema += row.column_name + '\n'
         schema += '\n'
+    app.logger.info(schema)
     return schema
 
 # This function generates SQL code based on a user-specified query, using Open 
