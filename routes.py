@@ -44,10 +44,15 @@ def get_query(nl_query):
             app.logger.info(sql_query)
             cursor.execute(sql_query)
             result = cursor.fetchall()
-            return {"data": result}
+            return jsonify(rows_to_dict_list(cursor, result))
 
     except pyodbc.Error as e:
         return {"error": str(e)}, 500
 
     except Exception as e:
         return {"error": str(e)}, 500
+
+ 
+def rows_to_dict_list(cursor, rows):
+    columns = [column[0] for column in cursor.description]
+    return [dict(zip(columns, row)) for row in rows]
