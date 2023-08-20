@@ -12,12 +12,23 @@ from settings import openai, conn, app
 def get_schema():
     schema = ""
     cursor = conn.cursor()
-    tables = cursor.tables()
+
+    # Fetch all table names
+    cursor.execute("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES")
+    tables = cursor.fetchall()
+
     for table in tables:
-        schema += table.table_name + '\n'
-        for row in cursor.columns(table=table.table_name):
-            schema += row.column_name + '\n'
+        table_name = table[0]
+        schema += "Table " + table_name + ':\n'
+
+        # Fetch columns for the current table
+        cursor.execute(f"SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{table_name}'")
+        columns = cursor.fetchall()
+
+        for column in columns:
+            schema += f"- {column[0]}: {column[1]}\n"
         schema += '\n'
+
     app.logger.info(schema)
     return schema
 
